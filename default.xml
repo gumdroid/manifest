@@ -1,9 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest>
+  <!-- Added for Gumstix -->
+  <remote  name="gumstix"
+           fetch="git://github.com/gumstix"
+           review="" />
+  <remote  name="gumdroid"
+           fetch="git://github.com/gumdroid"
+           review="" />
+  <remote  name="rowboat"
+           fetch="git://gitorious.org/rowboat"
+           review="" />
+  <remote  name="local"
+           fetch="file:///home/ash/Gumstix"
+           review="" />
+  <project path="kernel" name="Linux" remote="local" revision="omap-3.2" />
+  <project path="uboot" name="UBoot" remote="local" revision="gumstix-v2013.07" />
+  <project path="device/gumstix/overo" name="../Store/Android/gumstix/overo" remote="local" revision="master" />
+  <project path="device/gumstix/duovero" name="../Store/Android/gumstix/duovero" remote="local" revision="master" />
+  <project path="device/gumstix/pepper" name="../Store/Android/gumstix/pepper" remote="local" revision="master" />
+  <project path="hardware/ti/sgx" name="hardware-ti-sgx" remote="rowboat" revision="ti_sgx_sdk-ddk_1.10-jb-4.3" />
+  <project path="hardware/libhardware_legacy" name="../Store/Android/gumstix/libhardware_legacy" groups="pdk" branch="mrvl" remote="local"/>
 
+  <!-- AOSP -->
   <remote  name="aosp"
-           fetch=".." />
-  <default revision="refs/tags/android-4.3_r3"
+           fetch="https://android.googlesource.com" />
+  <default revision="refs/tags/android-4.3_r3.1"
            remote="aosp"
            sync-j="4" />
 
@@ -244,7 +265,6 @@
   <project path="hardware/broadcom/wlan" name="platform/hardware/broadcom/wlan" groups="broadcom_wlan" />
   <project path="hardware/invensense" name="platform/hardware/invensense" groups="invensense" />
   <project path="hardware/libhardware" name="platform/hardware/libhardware" groups="pdk" />
-  <project path="hardware/libhardware_legacy" name="platform/hardware/libhardware_legacy" groups="pdk" />
   <project path="hardware/msm7k" name="platform/hardware/msm7k" />
   <project path="hardware/qcom/audio" name="platform/hardware/qcom/audio" groups="qcom" />
   <project path="hardware/qcom/bt" name="platform/hardware/qcom/bt" groups="qcom" />
