@@ -26,7 +26,7 @@
 <!--
   <project path="device/gumstix/duovero" name="Store/Android/gumstix/duovero" remote="ash" revision="master" />
 -->
-  <project path="device/gumstix/pepper" name="pepper" remote="ash" revision="master" />
+  <project path="device/gumstix/pepper" name="pepper" remote="ash" revision="dev" />
   <project path="hardware/ti/sgx" name="hardware-ti-sgx" remote="rowboat" revision="ti_sgx_sdk-ddk_1.10-jb-4.3" />
   <project path="hardware/libhardware_legacy" name="libhardware_legacy" groups="pdk" branch="mrvl" remote="ash"/>
 
