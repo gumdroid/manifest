@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest>
   <!-- Added for Gumstix -->
+  <remote  name="ash"
+           fetch="git://github.com/ashcharles"
+           review="" />
   <remote  name="gumstix"
            fetch="git://github.com/gumstix"
            review="" />
@@ -10,19 +13,22 @@
   <remote  name="rowboat"
            fetch="git://gitorious.org/rowboat"
            review="" />
+  <!-- (for development) Repos on my local machine -->
   <remote  name="local"
-           fetch="file:///home/ash/Gumstix"
+           fetch="file:///home/ash"
            review="" />
-  <project path="kernel" name="Linux" remote="local" revision="rowboat-am335x-kernel-3.2" />
-  <project path="uboot" name="UBoot" remote="local" revision="gumstix-v2013.07" />
-  <project path="device/gumstix/overo" name="../Store/Android/gumstix/overo" remote="local" revision="master">
+  <project path="kernel" name="Gumstix/Linux" remote="ash" revision="rowboat-am335x-kernel-3.2" />
+  <project path="uboot" name="Gumstix/UBoot" remote="gumstix" revision="gumstix-v2013.07" />
+  <project path="device/gumstix/overo" name="overo" remote="ash" revision="dev">
     <!-- Arbitrarily, provide our modified root Makefile from Overo -->
     <copyfile src="root.mk" dest="Makefile" />
   </project>
-  <project path="device/gumstix/duovero" name="../Store/Android/gumstix/duovero" remote="local" revision="master" />
-  <project path="device/gumstix/pepper" name="../Store/Android/gumstix/pepper" remote="local" revision="master" />
+<!--
+  <project path="device/gumstix/duovero" name="Store/Android/gumstix/duovero" remote="ash" revision="master" />
+-->
+  <project path="device/gumstix/pepper" name="pepper" remote="ash" revision="master" />
   <project path="hardware/ti/sgx" name="hardware-ti-sgx" remote="rowboat" revision="ti_sgx_sdk-ddk_1.10-jb-4.3" />
-  <project path="hardware/libhardware_legacy" name="../Store/Android/gumstix/libhardware_legacy" groups="pdk" branch="mrvl" remote="local"/>
+  <project path="hardware/libhardware_legacy" name="libhardware_legacy" groups="pdk" branch="mrvl" remote="ash"/>
 
   <!-- AOSP -->
   <remote  name="aosp"
