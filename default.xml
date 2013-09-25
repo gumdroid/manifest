@@ -17,8 +17,8 @@
   <remote  name="local"
            fetch="file:///home/ash"
            review="" />
-  <project path="kernel" name="Gumstix/Linux" remote="ash" revision="rowboat-am335x-kernel-3.2" />
-  <project path="uboot" name="Gumstix/UBoot" remote="gumstix" revision="gumstix-v2013.07" />
+  <project path="kernel" name="linux" remote="ash" revision="rowboat-am335x-kernel-3.2" />
+  <project path="uboot" name="u-boot" remote="gumstix" revision="v2013.07" />
   <project path="device/gumstix/overo" name="overo" remote="ash" revision="dev">
     <!-- Arbitrarily, provide our modified root Makefile from Overo -->
     <copyfile src="root.mk" dest="Makefile" />
