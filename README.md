@@ -45,7 +45,7 @@ Create an empty directory to hold your working files:
 
 Tell Repo where to find the manifest:
 
-    $ repo init -u git://github.com/ash/manifest.git -b gumdroid-4.3_r3.1
+    $ repo init -u git://github.com/ashcharles/manifest.git -b gumdroid-4.3_r3.1
 
 
 A successful initialization will end with a message stating that Repo is
