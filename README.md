@@ -17,7 +17,27 @@ setup an Android build environment for you!
 
 Getting Started
 ---------------
-**1.  Install Repo.**
+**1.  Configure Development machine.**
+
+**Note:**
+Android requires a 64-bit build machine.  These instructions have been tested on an Ubuntu 12.10 installation but recent Ubuntu releases should work.  See http://source.android.com/source/initializing.html for more details.
+**
+
+Android only likes official Java.
+
+    $ sudo add-apt-repository ppa:webupd8team/java
+    $ sudo apt-get update && sudo apt-get install oracle-java6-installer
+
+Grab some other packages.
+
+    $ sudo apt-get install git gnupg flex bison gperf build-essential zip curl libc6-dev libncurses5-dev:i386 x11proto-core-dev libx11-dev:i386 libreadline6-dev:i386 libgl1-mesa-glx:i386 libgl1-mesa-dev g++-multilib mingw32 tofrodos python-markdown libxml2-utils xsltproc zlib1g-dev:i386 uboot-mkimage
+    $ sudo ln -s /usr/lib/i386-linux-gnu/mesa/libGL.so.1 /usr/lib/i386-linux-gnu/libGL.so
+
+(Optional) To use ADB (the Android Debug Bridge), give access to the USB port.
+
+  $ sudo sh -c "echo 'SUBSYSTEM==\"usb\", ATTR{idVendor}==\"18d1\", ATTR{idProduct}==\"d002\", MODE=\"0666\"' >> /etc/udev/rules.d/51-android.rules"
+
+**2.  Install Repo.**
 
 Download the Repo script:
 
@@ -36,7 +56,7 @@ with the help flag.
 
     $ repo --help
 
-**2.  Initialize a Repo client.**
+**3.  Initialize a Repo client.**
 
 Create an empty directory to hold your working files:
 
@@ -72,14 +92,14 @@ To get back to the known stable version, type:
 To learn more about repo, look at http://source.android.com/source/version-control.html 
 ***
 
-**3.  Fetch all the repositories:**
+**4.  Fetch all the repositories:**
 
     $ repo sync
 
 Now go turn on the coffee machine as this may take an hour or so depending on
 your connection.
 
-**4. Build Android:**
+**5. Build Android:**
 
     $ make TARGET_PRODUCT=pepper -j8 bsp systemtarball boottarball userdatatarball
 
