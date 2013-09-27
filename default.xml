@@ -10,6 +10,9 @@
   <remote  name="gumdroid"
            fetch="git://github.com/gumdroid"
            review="" />
+  <remote  name="linaro"
+           fetch="git://android.git.linaro.org/"
+           review="" />
   <remote  name="rowboat"
            fetch="git://gitorious.org/rowboat"
            review="" />
@@ -29,6 +32,8 @@
   <project path="device/gumstix/pepper" name="pepper" remote="ash" revision="dev" />
   <project path="hardware/ti/sgx" name="hardware-ti-sgx" remote="rowboat" revision="ti_sgx_sdk-ddk_1.10-jb-4.3" />
   <project path="hardware/libhardware_legacy" name="libhardware_legacy" groups="pdk" revision="mrvl" remote="ash"/>
+  <!-- Linaro Settings Manager include ECM (Ethernet Connection Manager) -->
+  <project path="packages/apps/Settings" name="platform/packages/apps/Settings" revision="linaro_android_4.3" remote="linaro" />
 
   <!-- AOSP -->
   <remote  name="aosp"
@@ -322,7 +327,6 @@
   <project path="packages/apps/Protips" name="platform/packages/apps/Protips" />
   <project path="packages/apps/Provision" name="platform/packages/apps/Provision" />
   <project path="packages/apps/QuickSearchBox" name="platform/packages/apps/QuickSearchBox" />
-  <project path="packages/apps/Settings" name="platform/packages/apps/Settings" />
   <project path="packages/apps/SmartCardService" name="platform/packages/apps/SmartCardService" />
   <project path="packages/apps/SoundRecorder" name="platform/packages/apps/SoundRecorder" />
   <project path="packages/apps/SpareParts" name="platform/packages/apps/SpareParts" />
