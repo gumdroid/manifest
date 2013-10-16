@@ -8,8 +8,8 @@ This repository provides Repo manifests to build Android for Gumstix products.
 If you already have an Android build setup and just want the device
 directories, you can find them here:
 
- * **Pepper**: git://github.com/ashcharles/pepper.git
- * **Overo**: git://github.com/ashcharles/overo.git
+ * **Pepper**: git://github.com/gumdroid/pepper.git
+ * **Overo**: git://github.com/gumdroid/overo.git
 ***
 
 Repo is a tool that enables the management of many git repositories given a 
@@ -206,14 +206,23 @@ Animated Android boot image should appear on the screen before you see the Andro
     USB 1 (J4) is a slave. You can access Android Debug Bridge (ADB) with this.
     USB 2 (J5) is a host. Using a micro USB to USB OTG Host Adapter, you can attach peripherals such as keyboards and mouse. 
 
-* **Suppress I2C bus messages:**
+* **Eliminate annoying I2C bus messages:**
 
    There will be peiriodic output to the serial console like this:
 
         [ 72.078553] omap_i2c omap_i2c.1: timeout waiting for bus ready
         [ 76.758463] omap_i2c omap_i2c.1: controller timed out
 
-   You can suppress this by adding 1.5K ohm pullup resistors from `VDD_3V3C` (pin 26) to `I2C0_SCL` (pin 33)  and also to `I2C0_SDA` (pin 31) in the 40 pin header.
+   You can fix this by adding 1.5K ohm pullup resistors from `VDD_3V3C` (pin 26) to `I2C0_SCL` (pin 33)  and also to `I2C0_SDA` (pin 31) in the 40 pin header.
+
+* **Install sample media files:**
+   You can download a sample media package from [here](https://s3.amazonaws.com/gumstix-misc/android/sample_media/gumstix_media_samples.tar.gz).
+   
+        $ tar xaf gumstix_media_samples.tar.gz
+        $ adb push gumstix_media_samples /data/media/0/
+
+   Then go to `Dev Tools > Media Provider > Scan`. 
+
 
 ***
 ##9. Issues##
@@ -221,27 +230,28 @@ The following peripherals are not working at the moment:
 
 ###9.1 Marvell mwifiex SD8787###
 
-   This multi-role chip requires a high level of integration between kernel and userspace. According to the Android logging system logcat, the device is failing to come up in such manner: 
+   According to the Android logging system logcat, the device is failing to come up in such manner: 
    
         W/CommandListener( 82): Failed to retrieve HW addr for wlan0 (No such device)
         D/CommandListener( 82): Settin[ 33.667590] init: no such service 'wpa_supplicant'
 
    Getting **Wifi** working involves configurations related to nl80211, cfg80211, and etc. Network device management in Android seems to be the culprit as this device works well in Yocto images. Settings are mostly found in the kernel configuration file and in the BoardConfig.mk (in *device/gumstix/pepper/*). The driver binary (*sd8787_uapsta.bin*) can be found in the Pepper device directory (*device/gumstix/pepper/*). 
 
-   Additionally **Bluetooth** has to be configured separately. Since Android Jellybean, Google switched to Broadcom's Bluedroid from Bluez. The new bluetooth stack does not support bluetooth devices using UART. Possible workarounds include writing a custom bluetooth profile to work with Bluedroid and swapping back Bluez entirely.  
+   Since Android Jellybean, Google switched to Broadcom's Bluedroid from Bluez. The new bluetooth stack does not support **bluetooth** devices using UART. Possible workarounds include writing a custom bluetooth profile to work with Bluedroid and swapping back Bluez entirely.  
 
 ###9.2 TI TLV320AIC3106###
 
-   The audio interface is getting detected but there is no audible output from the jack.
+   The audio interface is configured but the playback is too fast:
 
         root@pepper:/ # ls proc | grep asound                                          
         asound
         root@pepper:/data/media/0 # ls /dev/snd/p
         pcmC0D0c  pcmC0D0p  
-        root@pepper:/data/media/0 # tinyplay M1F1-int16-AFsp.wav  -d 0                 
-        Unable to open PCM device 0 (cannot set hw params: Invalid argument)
+        root@pepper:/data/media/0 # tinyplay M1F1-int16-AFsp.wav  -n 16                 
 
-   On Gumstix Yocto image for Pepper, the line-out works (albeit the volume is small). A good debug point would be the hardware application layer (HAL) for audio which is found in *device/gumstix/pepper/libaudio*. Another possible fail point would be the mixer settings. Although Android uses ALSA just like the Yocto image, it uses *tinymix*. 
+   Android's default music player outputs no sound.
+   
+A good debug point would be the hardware application layer (HAL) for audio which is found in *device/gumstix/pepper/libaudio*. Another possible fail point would be the mixer settings. Although Android uses ALSA just like the Yocto image, it uses *tinymix*. 
 
 ###9.3 Ethernet###
 
