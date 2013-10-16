@@ -7,16 +7,17 @@ This repository provides Repo manifests to build Android for Gumstix products.
 **Note:**
 If you already have an Android build setup and just want the device
 directories, you can find them here:
-**Pepper**: git://github.com/ashcharles/pepper.git
-**Overo**: git://github.com/ashcharles/overo.git
+
+ * **Pepper**: git://github.com/ashcharles/pepper.git
+ * **Overo**: git://github.com/ashcharles/overo.git
 ***
 
 Repo is a tool that enables the management of many git repositories given a 
 single *manifest* file.  Tell repo to fetch a manifest from this repository and
 it will fetch the git repositories specified in the manifest and, by doing so,
-setup an Android build environment for you!
+setup an Android build environment for you.
 
-####TOC####
+##TOC##
 
 - [Build Android for Gumstix Boards](#build-android-for-gumstix-boards)
 	- [Getting Started](#getting-started)
@@ -33,11 +34,10 @@ setup an Android build environment for you!
 
 Getting Started
 ---------------
-####1.  Configure Development machine.####
+##1.  Configure Development machine.##
 
 **Note:**
 Android requires a 64-bit build machine.  These instructions have been tested on an Ubuntu 12.10 installation but recent Ubuntu releases should work.  See http://source.android.com/source/initializing.html for more details.
-**
 
 Android only likes official Java.
 
@@ -49,11 +49,13 @@ Grab some other packages.
     $ sudo apt-get install git gnupg flex bison gperf build-essential zip curl libc6-dev libncurses5-dev:i386 x11proto-core-dev libx11-dev:i386 libreadline6-dev:i386 libgl1-mesa-glx:i386 libgl1-mesa-dev g++-multilib mingw32 tofrodos python-markdown libxml2-utils xsltproc zlib1g-dev:i386 uboot-mkimage
     $ sudo ln -s /usr/lib/i386-linux-gnu/mesa/libGL.so.1 /usr/lib/i386-linux-gnu/libGL.so
 
-(Optional) To use ADB (the Android Debug Bridge), give access to the USB port.
+** 2. [Optional] To use ADB (the Android Debug Bridge), allow access to the USB port on Android devices.
 
     $ sudo sh -c "echo 'SUBSYSTEM==\"usb\", ATTR{idVendor}==\"18d1\", ATTR{idProduct}==\"d002\", MODE=\"0666\"' >> /etc/udev/rules.d/51-android.rules"
 
-####2.  Install Repo.####
+##2.  Install Repo.##
+**Note:**
+Users of the [Gumstix Yocto Manifest] (https://github.com/gumstix/Gumstix-YoctoProject-Repo "Gumstix Yocto Manifest") can skip this step; you've already installed repo.
 
 Download the Repo script:
 
@@ -67,16 +69,16 @@ Move it on to your system path:
 
     $ sudo mv repo /usr/local/bin/
 
-If it is correctly installed, you should see a Usage message when invoked
+If it is correctly installed, you should see a *Usage* message when invoked
 with the help flag.
 
     $ repo --help
 
-####3.  Initialize a Repo client.####
+##3.  Initialize a Repo client.##
 
 Create an empty directory to hold your working files:
 
-    $ mkdir android 
+    $ mkdir android
     $ cd android
 
 Tell Repo where to find the manifest:
@@ -86,13 +88,11 @@ Tell Repo where to find the manifest:
 
 A successful initialization will end with a message stating that Repo is
 initialized in your working directory. Your directory should now
-contain a .repo directory where repo control files such as the manifest are
+contain a *.repo* directory where repo control files such as the manifest are
 stored but you should not need to touch this directory.
 ***
 **Note:**
 You can use the **-b** switch to specify the branch of the repository to use.
-
-The **-m** switch selects the manifest file (default is *default.xml*).
 
 To test out the bleeding edge, type:
 
@@ -107,29 +107,58 @@ To get back to the known stable version, type:
 To learn more about repo, look at http://source.android.com/source/version-control.html 
 ***
 
-####4.  Fetch all the repositories####
+##4.  Fetch all the repositories##
 
     $ repo sync
 
 Now go turn on the coffee machine as this may take an hour or so depending on
-your connection.
+your internet connection.
 
 ***
-####5. Build Android####
+##5. Build Android##
 
-There are 4 make targets to create a functional Android image: bsp systemtarball boottarball userdatatarball.
-Building these components is straightforward. However interdependency between bsp and systemtarbal targets requires a workaround at the moment. 
+Android includes a pre-built cross-compiler for ARM systems and uses a **make**-based
+build system.
 
-First build systemtarball
+    $ make TARGET_PRODUCT=<pepper|overo> -j8 systemtarball userdatatarball
 
-    $ make TARGET_PRODUCT=pepper -j8 systemtarball:
+Use the **-j** flag to specify how many threads to use while building. As a general rule,
+use twice the number of cores on your development machine; I've got a four-core machine.
 
-Now build the remaining targets while updating systemtarball:
+The *systemtarball* target builds a rootfile system tarball that is mounted as a read-only
+ext4 filesystem from the second partition of your bootable microSD card. The *userdatatarball*
+target builds a tarball that should be uncompressed onto the fourth partition of your microSD
+card as a writable area for the OS and can include any application data, photos, and other media.
 
-    $ make TARGET_PRODUCT=pepper -j8 bsp systemtarball boottarball userdatatarball
+The build output can be found in the *out* directory; to start fresh you could delete this whole
+directory.  After a successful build, you should find a *system.tar.bz2* and a *userdata.tar.bz2*
+in *out/target/product/<pepper|overo>*
+
+We also need to build the files needed to boot and run our Gumstix system:
+
+    $ make TARGET_PRODUCT=<pepper|overo> -j8 bsp
+
+This should build the *mlo* and *u-boot.img* bootloaders from the *uboot* repository as well as
+a Linux *uImage* file from the *kernel* repository.  Binaries for the SGX hardware graphical accelerator
+are built from the *device/ti/sgx* respository.  All these builds are done in-tree as SGX can't be
+built out of tree but the build output is copies to the *out/target/product/<pepper|overo>/boot*
+directory.  See the *Makefile* in the top-directory for more details.
+
+To include the freshly created SGX libraries in our image, we need to repackage the systemtarball
+(don't worry, it is quick):
+
+    $ make TARGET_PRODUCT=<pepper|overo> -j8 systemtarball
+
+**6. Make a Bootable SD Card:**
+Now that everything is built, we need to format and copy the files over to a microSD card to boot
+our Gumstix system.  Insert a blank (or at least, with nothing you want to keep) microSD card of
+at least 4GB to your development machine.  Use *dmesg* to [figure out your device name]
+(http://gumstix.org/getting-started-guide/242-create-a-bootable-microsd-card.html).
+
+    $ out/host/linux-x86/bin/mkcard -d <device-name> -p <pepper|overo>
 
 ***
-####6. Create micro SD card####
+##6. Create micro SD card##
 
 In the build output directory `out/target/product/pepper`, you will find these files necessary to build a bootable micro SD card.
 
@@ -145,11 +174,10 @@ In the build output directory `out/target/product/pepper`, you will find these f
     ./userdata.tar.bz2 
 
  There are 4 paritions required: boot, system, cache, and data. You can use mkandroidsd.sh. For example,
- 
-    $ ./mkandroidsd.sh /dev/sdh  
+    $ out/host/linux-x86/bin/mkcard -d /dev/mmcblk0 -p <pepper|overo>
 
 ***
-####7. Boot Android####
+##7. Boot Android##
 
 If Pepper is booting but the touch screen remains dark, try the following in the u-boot command line:
 
@@ -164,7 +192,7 @@ Then in shell through the consol serial port,
 Animated Android boot image should appear on the screen before you see the Android lock screen. 
 
 ***
-####8. Use Android####
+##8. Use Android##
 
 * **Push buttons on Pepper act similarly to the hardware buttons of other Android devices:**
 
@@ -188,22 +216,21 @@ Animated Android boot image should appear on the screen before you see the Andro
    You can suppress this by adding 1.5K ohm pullup resistors from `VDD_3V3C` (pin 26) to `I2C0_SCL` (pin 33)  and also to `I2C0_SDA` (pin 31) in the 40 pin header.
 
 ***
-####9. Issues####
+##9. Issues##
 The following peripherals are not working at the moment:
 
-* **Marvell mwifiex SD8787**
+###9.1 Marvell mwifiex SD8787###
 
-   This multi-role chip requires a high level of integration between kernel and userspace. Getting **Wifi** working involves configurations related to nl80211, cfg80211, and etc. 
-   The device is failing to come up in such manner: 
+   This multi-role chip requires a high level of integration between kernel and userspace. According to the Android logging system logcat, the device is failing to come up in such manner: 
    
         W/CommandListener( 82): Failed to retrieve HW addr for wlan0 (No such device)
         D/CommandListener( 82): Settin[ 33.667590] init: no such service 'wpa_supplicant'
 
-   Network device management in Android seems to be the culprit as this device works well in Yocto images. Settings are mostly found in the kernel configuration file and in the BoardConfig.mk (in *device/gumstix/pepper/*). The driver binary (*sd8787_uapsta.bin*) can be found in the Pepper device directory (*device/gumstix/pepper/*). 
+   Getting **Wifi** working involves configurations related to nl80211, cfg80211, and etc. Network device management in Android seems to be the culprit as this device works well in Yocto images. Settings are mostly found in the kernel configuration file and in the BoardConfig.mk (in *device/gumstix/pepper/*). The driver binary (*sd8787_uapsta.bin*) can be found in the Pepper device directory (*device/gumstix/pepper/*). 
 
    Additionally **Bluetooth** has to be configured separately. Since Android Jellybean, Google switched to Broadcom's Bluedroid from Bluez. The new bluetooth stack does not support bluetooth devices using UART. Possible workarounds include writing a custom bluetooth profile to work with Bluedroid and swapping back Bluez entirely.  
 
-* **TI TLV320AIC3106**
+###9.2 TI TLV320AIC3106###
 
    The audio interface is getting detected but there is no audible output from the jack.
 
@@ -216,9 +243,9 @@ The following peripherals are not working at the moment:
 
    On Gumstix Yocto image for Pepper, the line-out works (albeit the volume is small). A good debug point would be the hardware application layer (HAL) for audio which is found in *device/gumstix/pepper/libaudio*. Another possible fail point would be the mixer settings. Although Android uses ALSA just like the Yocto image, it uses *tinymix*. 
 
-* **Ethernet**
+###9.3 Ethernet###
 
-####10. Resources ####
+##10. Resources ##
 * Gumstix Developer Center - http://gumstix.org
 * Gumstix Mailing List - https://lists.sourceforge.net/lists/listinfo/gumstix-users
 * Pepper board schematic - http://pubs.gumstix.com/boards/PEPPER/R4021/
