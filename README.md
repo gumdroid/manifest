@@ -150,15 +150,6 @@ To include the freshly created SGX libraries in our image, we need to repackage 
     $ make TARGET_PRODUCT=<pepper|overo> -j8 systemtarball
 
 **6. Make a Bootable SD Card:**
-Now that everything is built, we need to format and copy the files over to a microSD card to boot
-our Gumstix system.  Insert a blank (or at least, with nothing you want to keep) microSD card of
-at least 4GB to your development machine.  Use *dmesg* to [figure out your device name]
-(http://gumstix.org/getting-started-guide/242-create-a-bootable-microsd-card.html).
-
-    $ out/host/linux-x86/bin/mkcard -d <device-name> -p <pepper|overo>
-
-***
-##6. Create micro SD card##
 
 In the build output directory `out/target/product/pepper`, you will find these files necessary to build a bootable micro SD card.
 
@@ -173,19 +164,17 @@ In the build output directory `out/target/product/pepper`, you will find these f
     ./system.tar.bz2 
     ./userdata.tar.bz2 
 
- There are 4 paritions required: boot, system, cache, and data. You can use mkandroidsd.sh. For example,
-    $ out/host/linux-x86/bin/mkcard -d /dev/mmcblk0 -p <pepper|overo>
+Now that everything is built, we need to format and copy the files over to a microSD card to boot
+our Gumstix system.  Insert a blank (or at least, with nothing you want to keep) microSD card of
+at least 4GB to your development machine.  Use *dmesg* to [figure out your device name]
+(http://gumstix.org/getting-started-guide/242-create-a-bootable-microsd-card.html).
+
+    $ out/host/linux-x86/bin/mkandroidsd -d <device-name> -p <pepper|overo>
 
 ***
 ##7. Boot Android##
 
-If Pepper is booting but the touch screen remains dark, try the following in the u-boot command line:
-
-    $ i2c mw 0x24 0x7 0x8
-    $ i2c mw 0x24 0x8 0x63
-    $ boot
-
-Then in shell through the consol serial port, 
+If Pepper is booting but the touch screen remains dark, try the following in the shell through either adb or the console serial port, 
 
     $ ./display-enable.sh
 
@@ -226,7 +215,7 @@ Animated Android boot image should appear on the screen before you see the Andro
 
 ***
 ##9. Issues##
-The following peripherals are not working at the moment:
+The following peripherals currently have issues:
 
 ###9.1 Marvell mwifiex SD8787###
 

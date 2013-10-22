@@ -20,16 +20,16 @@
   <remote  name="local"
            fetch="file:///home/ash"
            review="" />
-  <project path="kernel" name="linux" remote="ash" revision="rowboat-am335x-kernel-3.2" />
+  <project path="kernel" name="linux" remote="gumdroid" revision="am335x-kernel-3.2" />
   <project path="uboot" name="u-boot" remote="gumstix" revision="v2013.07" />
-  <project path="device/gumstix/overo" name="overo" remote="ash" revision="dev">
+  <project path="device/gumstix/overo" name="overo" remote="gumdroid" revision="dev">
     <!-- Arbitrarily, provide our modified root Makefile from Overo -->
     <copyfile src="root.mk" dest="Makefile" />
   </project>
 <!--
   <project path="device/gumstix/duovero" name="Store/Android/gumstix/duovero" remote="ash" revision="master" />
 -->
-  <project path="device/gumstix/pepper" name="pepper" remote="ash" revision="dev" />
+  <project path="device/gumstix/pepper" name="pepper" remote="gumdroid" revision="dev" />
   <project path="hardware/ti/sgx" name="hardware-ti-sgx" remote="rowboat" revision="ti_sgx_sdk-ddk_1.10-jb-4.3" />
   <!-- Linaro Settings Manager include ECM (Ethernet Connection Manager) -->
   <project path="packages/apps/Settings" name="platform/packages/apps/Settings" revision="linaro_android_4.3" remote="linaro" />
