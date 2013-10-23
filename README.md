@@ -21,7 +21,7 @@ setup an Android build environment for you.
 
 - [Build Android for Gumstix Boards](#build-android-for-gumstix-boards)
 	- [Getting Started](#getting-started)
-			- [1.  Configure Development machine.](#1--configure-development-machine)
+			- [1.  Configure Development Machine.](#1--configure-development-machine)
 			- [2.  Install Repo.](#2--install-repo)
 			- [3.  Initialize a Repo client.](#3--initialize-a-repo-client)
 			- [4.  Fetch all the repositories](#4--fetch-all-the-repositories)
@@ -34,22 +34,22 @@ setup an Android build environment for you.
 
 Getting Started
 ---------------
-##1.  Configure Development machine.##
+##1.  Configure Development Machine.##
 
 **Note:**
-Android requires a 64-bit build machine.  These instructions have been tested on an Ubuntu 12.10 installation but recent Ubuntu releases should work.  See http://source.android.com/source/initializing.html for more details.
+Android requires a 64-bit build machine.  These instructions have been tested on an Ubuntu 12.04 and 12.10 installation but recent Ubuntu releases should work.  See http://source.android.com/source/initializing.html for more details.
 
-Android only likes official Java.
+Android only likes official Java:
 
     $ sudo add-apt-repository ppa:webupd8team/java
     $ sudo apt-get update && sudo apt-get install oracle-java6-installer
 
-Grab some other packages.
+Grab some other packages:
 
     $ sudo apt-get install git gnupg flex bison gperf build-essential zip curl libc6-dev libncurses5-dev:i386 x11proto-core-dev libx11-dev:i386 libreadline6-dev:i386 libgl1-mesa-glx:i386 libgl1-mesa-dev g++-multilib mingw32 tofrodos python-markdown libxml2-utils xsltproc zlib1g-dev:i386 uboot-mkimage
     $ sudo ln -s /usr/lib/i386-linux-gnu/mesa/libGL.so.1 /usr/lib/i386-linux-gnu/libGL.so
 
-** 2. [Optional] To use ADB (the Android Debug Bridge), allow access to the USB port on Android devices.
+** 2. [Optional] To use ADB (the Android Debug Bridge), allow access to the USB port on Android devices:
 
     $ sudo sh -c "echo 'SUBSYSTEM==\"usb\", ATTR{idVendor}==\"18d1\", ATTR{idProduct}==\"d002\", MODE=\"0666\"' >> /etc/udev/rules.d/51-android.rules"
 
@@ -70,7 +70,7 @@ Move it on to your system path:
     $ sudo mv repo /usr/local/bin/
 
 If it is correctly installed, you should see a *Usage* message when invoked
-with the help flag.
+with the help flag:
 
     $ repo --help
 
