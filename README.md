@@ -195,7 +195,7 @@ Animated Android boot image should appear on the screen before you see the Andro
     USB 1 (J4) is a slave. You can access Android Debug Bridge (ADB) with this.
     USB 2 (J5) is a host. Using a micro USB to USB OTG Host Adapter, you can attach peripherals such as keyboards and mouse. 
 
-* **Eliminate annoying I2C bus messages:**
+* **Fix I2C bus messages errors:**
 
    There will be peiriodic output to the serial console like this:
 
@@ -219,28 +219,31 @@ The following peripherals currently have issues:
 
 ###9.1 Marvell mwifiex SD8787###
 
-   According to the Android logging system logcat, the device is failing to come up in such manner: 
-   
-        W/CommandListener( 82): Failed to retrieve HW addr for wlan0 (No such device)
-        D/CommandListener( 82): Settin[ 33.667590] init: no such service 'wpa_supplicant'
+   Firstly, Marvell's SD8787 driver binary does not support module parameters, but Android expects module parameters, for example, in  _/sys/module/wlan/parameters_ to configure operation mode (ie. station, AP, P2P). 
+   Specifically, the network bringup fails at the line 906 of [hardware/libhardware_legacy/wifi/wifi.c](https://android.googlesource.com/platform/hardware/libhardware_legacy/+/android-4.3.1_r1/wifi/wifi.c)
 
-   Getting **Wifi** working involves configurations related to nl80211, cfg80211, and etc. Network device management in Android seems to be the culprit as this device works well in Yocto images. Settings are mostly found in the kernel configuration file and in the BoardConfig.mk (in *device/gumstix/pepper/*). The driver binary (*sd8787_uapsta.bin*) can be found in the Pepper device directory (*device/gumstix/pepper/*). 
+	wifi.c:906 fd = TEMP_FAILURE_RETRY(open(WIFI_DRIVER_FW_PATH_PARAM, O_WRONLY));
 
-   Since Android Jellybean, Google switched to Broadcom's Bluedroid from Bluez. The new bluetooth stack does not support **bluetooth** devices using UART. Possible workarounds include writing a custom bluetooth profile to work with Bluedroid and swapping back Bluez entirely.  
+It cannot open the parameters file descripter: 
+
+	E/WifiHW  (   81): Failed to open wlan fw path param (No such file or directory)
+
+The mwifiex module indeed does not have parameters:
+
+	root@pepper:/sys/module/mwifiex # ls
+	uevent
+	version
+
+   Secondly, TI's Android kernel for AM335x, which Gumstix Android is based on, [does not support RFKill](http://processors.wiki.ti.com/index.php/Android_wireless_build_and_porting_guide) like below:
+
+	I/wpa_supplicant(  825): rfkill: Cannot open RFKILL control device
+
+
+   Lastely, Android now uses Broadcom's Bluedroid instead of Bluez. This new bluetooth stack does not support **bluetooth** devices using UART. Possible workarounds include writing a custom bluetooth profile to work with Bluedroid and swapping back Bluez entirely.  
 
 ###9.2 TI TLV320AIC3106###
 
-   The audio interface is configured but the playback is too fast:
-
-        root@pepper:/ # ls proc | grep asound                                          
-        asound
-        root@pepper:/data/media/0 # ls /dev/snd/p
-        pcmC0D0c  pcmC0D0p  
-        root@pepper:/data/media/0 # tinyplay M1F1-int16-AFsp.wav  -n 16                 
-
-   Android's default music player outputs no sound.
-   
-A good debug point would be the hardware application layer (HAL) for audio which is found in *device/gumstix/pepper/libaudio*. Another possible fail point would be the mixer settings. Although Android uses ALSA just like the Yocto image, it uses *tinymix*. 
+   The audio interface is configured, yet not reliable. Android Music application play wav and mp3 files, and user's screen touch gets audio feedback, but audio stops with no obvious log output. A good debug point would be the hardware application layer (HAL) for audio which is found in *device/gumstix/pepper/libaudio*. Another possible fail point would be the mixer settings. Although Android uses ALSA just like the Yocto image, it uses *tinymix*. 
 
 ###9.3 Ethernet###
 
