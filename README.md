@@ -238,7 +238,7 @@ Consequently, RFKill cannot manage the wireless chipset:
  
 	I/wpa_supplicant(  825): rfkill: Cannot open RFKILL control device
 
-   Secondly, Android now uses Broadcom's Bluedroid instead of Bluez. This new bluetooth stack does not support bluetooth devices using UART. Possible workarounds include writing a custom bluetooth profile to work with Bluedroid and swapping back Bluez entirely.  
+   Secondly, Android now uses Broadcom's [Bluedroid](https://source.android.com/devices/bluetooth.html) instead of Bluez. This new bluetooth stack does not support bluetooth devices using UART. Possible workarounds include writing a custom bluetooth profile to work with Bluedroid and swapping back Bluez entirely.  
 
    Lastly, while ethernet works out of box, Android lacks ethernet configuration tools accessible from the user interface. 
 
