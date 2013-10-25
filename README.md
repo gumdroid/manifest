@@ -217,7 +217,7 @@ Animated Android boot image should appear on the screen before you see the Andro
 ##9. Issues##
 The following peripherals currently have issues:
 
-###9.1 Marvell mwifiex SD8787 and Network Management###
+###9.1 Marvell mwifiex SD8787 and ethernet###
 
    Firstly, Marvell's SD8787 driver binary does not support module parameters, but Android assumes it does, for example, in  _/sys/module/wlan/parameters_ to configure operation mode (ie. station, AP, P2P). 
    Specifically, the network bringup fails at the line 906 of [hardware/libhardware_legacy/wifi/wifi.c](https://android.googlesource.com/platform/hardware/libhardware_legacy/+/android-4.3.1_r1/wifi/wifi.c)
@@ -238,7 +238,7 @@ Consequently, RFKill cannot manage the wireless chipset:
  
 	I/wpa_supplicant(  825): rfkill: Cannot open RFKILL control device
 
-   Secondly, Android now uses Broadcom's Bluedroid instead of Bluez. This new bluetooth stack does not support **bluetooth** devices using UART. Possible workarounds include writing a custom bluetooth profile to work with Bluedroid and swapping back Bluez entirely.  
+   Secondly, Android now uses Broadcom's Bluedroid instead of Bluez. This new bluetooth stack does not support bluetooth devices using UART. Possible workarounds include writing a custom bluetooth profile to work with Bluedroid and swapping back Bluez entirely.  
 
    Lastly, while ethernet works out of box, Android lacks ethernet configuration tools accessible from the user interface. 
 
