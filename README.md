@@ -8,7 +8,7 @@ This repository provides Repo manifests to build Android for Gumstix products.
 If you already have an Android build setup and just want the device
 directories, you can find them here:
 
-*As of October 2013, the following information only pertains to Gumstix Pepper SBC. Stay tuned for updates on Overo and Duovero.* 
+**As of October 2013, the following information only pertains to Gumstix Pepper SBC. Stay tuned for updates on Overo and Duovero.**
 
  * **Pepper**: git://github.com/gumdroid/pepper.git
  * **Overo**: git://github.com/gumdroid/overo.git
