@@ -2,6 +2,7 @@ Build Android for Gumstix Boards
 ================================
 
 This repository provides Repo manifests to build Android for Gumstix products.
+*As of October 2013, the following information only pertains to Gumstix Pepper SBC. Stay tuned for updates on Overo and Duovero.* 
 
 ***
 **Note:**
@@ -10,6 +11,7 @@ directories, you can find them here:
 
  * **Pepper**: git://github.com/gumdroid/pepper.git
  * **Overo**: git://github.com/gumdroid/overo.git
+
 ***
 
 Repo is a tool that enables the management of many git repositories given a 
