@@ -10,6 +10,7 @@ directories, you can find them here:
 
  * **Pepper**: git://github.com/gumdroid/pepper.git
  * **Overo**: git://github.com/gumdroid/overo.git
+
 ***
 
 Repo is a tool that enables the management of many git repositories given a 
@@ -24,7 +25,7 @@ setup an Android build environment for you.
  * [Initialize a Repo client](#3-initialize-a-repo-client)
  * [Fetch all the repositories](#4-fetch-all-the-repositories)
  * [Build Android](#5-build-android)
- * [Create micro SD card](#6-create-a-bootable-sd-card)
+ * [Create micro SD card](#6-make-a-bootable-sd-card)
  * [Boot Android](#7-boot-android)
  * [Use Android](#8-use-android)
  * [Known Issues](#9-issues)
