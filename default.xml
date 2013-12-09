@@ -17,7 +17,7 @@
   <project path="uboot" name="u-boot" remote="gumstix" revision="v2013.10" />
   <project path="device/gumstix/common" name="common" remote="gumdroid" revision="master" />
   <project path="device/gumstix/overo" name="overo" remote="gumdroid" revision="dev" />
-  <project path="device/gumstix/pepper" name="pepper" remote="gumdroid" revision="master" />
+  <project path="device/gumstix/pepper" name="pepper" remote="gumdroid" revision="dev" />
   <project path="hardware/ti/sgx" name="hardware-ti-sgx" remote="rowboat" revision="07e98bf04976a3488a291d6b27c0718bcd75a4f5" />
   <!-- Linaro Settings Manager include ECM (Ethernet Connection Manager) -->
   <project path="packages/apps/Settings" name="platform/packages/apps/Settings" revision="linaro_android_4.3" remote="linaro" />
