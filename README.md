@@ -183,7 +183,7 @@ our Gumstix system.  Insert a blank (or at least, with nothing you want to keep)
 at least 4GB to your development machine.  Use **dmesg** to [figure out your device name]
 (http://gumstix.org/getting-started-guide/242-create-a-bootable-microsd-card.html).
 
-    $ mkandroidsd -d <device-name> -p <pepper|overo>
+    $ sudo out/host/linux-x86/bin/mkandroidsd /dev/mmcblk0 <pepper|overo>
 
 ##7. Boot Android##
 
