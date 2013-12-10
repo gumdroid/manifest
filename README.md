@@ -218,36 +218,8 @@ Animated Android boot image should appear on the screen before you see the Andro
 
 ***
 ##9. Issues##
-The following peripherals currently have issues:
 
-###9.1 Marvell mwifiex SD8787 and ethernet###
-
-   Firstly, Marvell's SD8787 driver binary does not support module parameters, but Android assumes it does, for example, in  _/sys/module/wlan/parameters_ to configure operation mode (ie. station, AP, P2P). 
-   Specifically, the network bringup fails at the line 906 of [hardware/libhardware_legacy/wifi/wifi.c](https://android.googlesource.com/platform/hardware/libhardware_legacy/+/android-4.3.1_r1/wifi/wifi.c)
-
-	wifi.c:906 fd = TEMP_FAILURE_RETRY(open(WIFI_DRIVER_FW_PATH_PARAM, O_WRONLY));
-
-It cannot open the parameters file descripter: 
-
-	E/WifiHW  (   81): Failed to open wlan fw path param (No such file or directory)
-
-The mwifiex module indeed does not have parameters:
-
-	root@pepper:/sys/module/mwifiex # ls
-	uevent
-	version
-
-Consequently, RFKill cannot manage the wireless chipset: 
- 
-	I/wpa_supplicant(  825): rfkill: Cannot open RFKILL control device
-
-   Secondly, Android now uses Broadcom's [Bluedroid](https://source.android.com/devices/bluetooth.html) instead of Bluez. This new bluetooth stack does not support bluetooth devices using UART. Possible workarounds include writing a custom bluetooth profile to work with Bluedroid and swapping back Bluez entirely.  
-
-   Lastly, while ethernet works out of box, Android lacks ethernet configuration tools accessible from the user interface. 
-
-###9.2 TI TLV320AIC3106###
-
-   The audio interface is configured, yet is not reliable. Android Music application play wav and mp3 files, and user's screen touch gets audio feedback, but audio stops with no obvious log output. A good debug point would be the hardware application layer (HAL) for audio which is found in *device/gumstix/pepper/libaudio*. Another possible fail point would be the mixer settings. Although Android uses ALSA just like the Yocto image, it uses *tinymix*. 
+Please refer to [Issues](https://github.com/gumdroid/manifest/issues?state=open) page
 
 ##10. Resources ##
 * Gumstix Developer Center - http://gumstix.org
