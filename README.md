@@ -132,7 +132,7 @@ use while building. As a general rule, use twice the number of cores on your dev
 
     $ m -j8 gumstix
 
-Try `m help` to see other options. Now go have a long lunch while the fan on your computer whirs.
+Try `hmm` to see other options. Now go have a long lunch while the fan on your computer whirs.
 
 ***
 **Note:**
@@ -150,7 +150,7 @@ a **userdata.tar.bz2** in `out/target/product/<pepper|overo>`.
 
 We also have targets to build the files needed to boot and run our Gumstix system:
 
-    $ m -j8 build-uboot build-kernel build-sgx
+    $ m -j8 uboot linux sgx
 
 This should build the **MLO** and **u-boot.img** bootloaders from the *uboot* repository as well as
 a Linux **uImage** file from the *kernel* repository.  Binaries for the SGX hardware graphical accelerator
@@ -265,3 +265,5 @@ Consequently, RFKill cannot manage the wireless chipset:
 * Gumstix Mailing List - https://lists.sourceforge.net/lists/listinfo/gumstix-users
 * Pepper board schematic - http://pubs.gumstix.com/boards/PEPPER/R4021/
 * Gumstix Android repository - https://github.com/gumdroid/
+* Useful tips on the Android make system - http://www.lindusembedded.com/blog/2010/12/10/the-android-build-system/
+* Android Source Reference - http://source.android.com
