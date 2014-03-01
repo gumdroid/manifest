@@ -19,7 +19,6 @@
   <project path="device/gumstix/overo" name="overo" remote="gumdroid" revision="dev" />
   <project path="device/gumstix/pepper" name="pepper" remote="gumdroid" revision="dev" />
   <project path="device/gumstix/duovero" name="duovero" remote="gumdroid" revision="dev" />
-  <project path="hardware/ti/sgx" name="hardware-ti-sgx" remote="gumdroid" revision="ti_sgx_sdk-ddk_1.10-jb-4.3" />
   <!-- Linaro Settings Manager include ECM (Ethernet Connection Manager) -->
   <project path="packages/apps/Settings" name="platform/packages/apps/Settings" revision="linaro_android_4.3" remote="linaro" />
 
