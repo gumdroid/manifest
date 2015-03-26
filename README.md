@@ -49,7 +49,7 @@ Android only likes official Java:
 
 Grab some other packages:
 
-    $ sudo apt-get install git gnupg flex bison gperf build-essential zip curl libc6-dev libncurses5-dev:i386 x11proto-core-dev libx11-dev:i386 libreadline6-dev:i386 libgl1-mesa-glx:i386 libgl1-mesa-dev g++-multilib mingw32 tofrodos python-markdown libxml2-utils xsltproc zlib1g-dev:i386 uboot-mkimage
+    $ sudo apt-get install git gnupg flex bison gperf build-essential zip curl libc6-dev libncurses5-dev:i386 x11proto-core-dev libx11-dev:i386 libreadline6-dev:i386 libgl1-mesa-glx:i386 libgl1-mesa-dev g++-multilib mingw32 tofrodos python-markdown libxml2-utils xsltproc zlib1g-dev:i386 u-boot-tools
     $ sudo ln -s /usr/lib/i386-linux-gnu/mesa/libGL.so.1 /usr/lib/i386-linux-gnu/libGL.so
 
 [optional] To use ADB (the Android Debug Bridge), allow Android devices to register with your development machine:
@@ -185,7 +185,9 @@ our Gumstix system.  Insert a blank (or at least, with nothing you want to keep)
 at least 4GB to your development machine.  Use **dmesg** to [figure out your device name]
 (http://gumstix.org/getting-started-guide/242-create-a-bootable-microsd-card.html).
 
-    $ sudo out/host/linux-x86/bin/mkandroidsd /dev/mmcblk0 <pepper|overo>
+    $ mkandroidsd /dev/mmcblk0 <pepper|overo>
+
+You may be prompted for as sudo password when needed.
 
 ##7. Boot Android##
 
