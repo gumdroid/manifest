@@ -155,7 +155,7 @@ We also have targets to build the files needed to boot and run our Gumstix syste
     $ m -j8 uboot linux sgx
 
 This should build the **MLO** and **u-boot.img** bootloaders from the *uboot* repository as well as
-a Linux **uImage** file from the *kernel* repository.  Binaries for the SGX hardware graphical accelerator
+a Linux image from the *kernel* repository.  Binaries for the SGX hardware graphical accelerator
 are built from the *device/ti/sgx* respository.  The kernel and SGX builds are done in-tree as SGX can't be
 built out of tree but the build output is copied to the `out/target/product/<pepper|overo>/boot`
 directory.  These targets can be cleaned too: **clean-uboot**, **clean-kernel**, **clean-sgx**. 
