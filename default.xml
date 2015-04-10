@@ -14,8 +14,8 @@
            fetch="git://gitorious.org/rowboat"
            review="" />
   <project path="kernel" name="android-kernel" remote="gumdroid" revision="overo-android" />
-  <project path="u-boot" name="u-boot" remote="gumstix" revision="v2013.10" />
-  <project path="device/gumstix/common" name="common" remote="gumdroid" revision="master" />
+  <project path="u-boot" name="u-boot" remote="gumstix" revision="v2014.10" />
+  <project path="device/gumstix/common" name="common" remote="gumdroid" revision="dev" />
   <project path="device/gumstix/overo" name="overo" remote="gumdroid" revision="dev" />
   <project path="device/gumstix/pepper" name="pepper" remote="gumdroid" revision="dev" />
   <project path="hardware/ti/sgx" name="hardware-ti-sgx" remote="gumdroid" revision="ti_sgx_sdk-ddk_1.10-jb-4.3" />

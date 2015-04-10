@@ -49,7 +49,7 @@ Android only likes official Java:
 
 Grab some other packages:
 
-    $ sudo apt-get install git gnupg flex bison gperf build-essential zip curl libc6-dev libncurses5-dev:i386 x11proto-core-dev libx11-dev:i386 libreadline6-dev:i386 libgl1-mesa-glx:i386 libgl1-mesa-dev g++-multilib mingw32 tofrodos python-markdown libxml2-utils xsltproc zlib1g-dev:i386 uboot-mkimage
+    $ sudo apt-get install git gnupg flex bison gperf build-essential zip curl libc6-dev libncurses5-dev:i386 x11proto-core-dev libx11-dev:i386 libreadline6-dev:i386 libgl1-mesa-glx:i386 libgl1-mesa-dev g++-multilib mingw32 tofrodos python-markdown libxml2-utils xsltproc zlib1g-dev:i386 u-boot-tools libswitch-perl
     $ sudo ln -s /usr/lib/i386-linux-gnu/mesa/libGL.so.1 /usr/lib/i386-linux-gnu/libGL.so
 
 [optional] To use ADB (the Android Debug Bridge), allow Android devices to register with your development machine:
@@ -155,7 +155,7 @@ We also have targets to build the files needed to boot and run our Gumstix syste
     $ m -j8 uboot linux sgx
 
 This should build the **MLO** and **u-boot.img** bootloaders from the *uboot* repository as well as
-a Linux **uImage** file from the *kernel* repository.  Binaries for the SGX hardware graphical accelerator
+a Linux image from the *kernel* repository.  Binaries for the SGX hardware graphical accelerator
 are built from the *device/ti/sgx* respository.  The kernel and SGX builds are done in-tree as SGX can't be
 built out of tree but the build output is copied to the `out/target/product/<pepper|overo>/boot`
 directory.  These targets can be cleaned too: **clean-uboot**, **clean-kernel**, **clean-sgx**. 
@@ -185,7 +185,9 @@ our Gumstix system.  Insert a blank (or at least, with nothing you want to keep)
 at least 4GB to your development machine.  Use **dmesg** to [figure out your device name]
 (http://gumstix.org/getting-started-guide/242-create-a-bootable-microsd-card.html).
 
-    $ sudo out/host/linux-x86/bin/mkandroidsd /dev/mmcblk0 <pepper|overo>
+    $ mkandroidsd /dev/mmcblk0 <pepper|overo>
+
+You may be prompted for as sudo password when needed.
 
 ##7. Boot Android##
 
