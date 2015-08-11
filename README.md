@@ -8,9 +8,9 @@ This repository provides Repo manifests to build Android for Gumstix products.
 If you already have an Android build setup and just want the device
 directories, you can find them here:
 
-**As of October 2013, the following information only pertains to Gumstix Pepper SBC. Stay tuned for updates on Overo and Duovero.**
+**As of Auguest 2015, the following information only pertains to Gumstix Pepper 43C and Overo . Stay tuned for updates on Duovero.**
 
- * **Pepper**: git://github.com/gumdroid/pepper.git
+ * **Pepper43C**: git://github.com/gumdroid/pepper.git
  * **Overo**: git://github.com/gumdroid/overo.git
 
 ***
@@ -203,34 +203,16 @@ system and follow along with the booting process:
 ***
 ##8. Use Android##
 
-* **Push buttons on Pepper act similarly to the hardware buttons of other Android devices:**
+* **Push buttons on Pepper43C act similarly to the hardware buttons of other Android devices:**
 
-    Switch 2 (S2/GPIO54) is configured as the back button. 
-    Switch 3 (S3/GPIO55) is configured as the menu button.
-
-   Additionally, power button can be added to available `ECAP_IN_PWM0_OUT` (Pin 8 in the 40 pin header). 
+    Switch 2 (GPIO54) is configured as the Back button.
+    GPIO55 (marked '55' on the 'J8' 20-pin header) is configured as the Menu button.
+    GPIO7 (marked '07' on the 'J8' 20-pin header) is configured as the Power button.
 
 * **2 Micro USB are configured as the following:**
 
-    USB 1 (J4) is a slave. You can access Android Debug Bridge (ADB) with this.
-    USB 2 (J5) is a host. Using a micro USB to USB OTG Host Adapter, you can attach peripherals such as keyboards and mouse. 
-
-* **Fix I2C bus messages errors:**
-
-   There will be peiriodic output to the serial console like this:
-
-        [ 72.078553] omap_i2c omap_i2c.1: timeout waiting for bus ready
-        [ 76.758463] omap_i2c omap_i2c.1: controller timed out
-
-   You can fix this by adding 1.5K ohm pullup resistors from `VDD_3V3C` (pin 26) to `I2C0_SCL` (pin 33)  and also to `I2C0_SDA` (pin 31) on the 40 pin header.
-
-* **Install sample media files:**
-   You can download a sample media package from [here](https://s3.amazonaws.com/gumstix-misc/android/sample_media/gumstix_media_samples.tar.gz).
-   
-        $ tar xaf gumstix_media_samples.tar.gz
-        $ adb push gumstix_media_samples /data/media/0/
-
-   Then go to `Dev Tools > Media Provider > Scan`. 
+    USB 1 (J6) is a slave. You can access Android Debug Bridge (ADB) with this.
+    USB 2 (J7) is an USB-UART serial console.
 
 ##9. Issues##
 
@@ -239,7 +221,6 @@ Please refer to [Issues](https://github.com/gumdroid/manifest/issues?state=open)
 ##10. Resources ##
 * Gumstix Developer Center - http://gumstix.org
 * Gumstix Mailing List - https://lists.sourceforge.net/lists/listinfo/gumstix-users
-* Pepper board schematic - http://pubs.gumstix.com/boards/PEPPER/R4021/
 * Gumstix Android repository - https://github.com/gumdroid/
 * Useful tips on the Android make system - http://www.lindusembedded.com/blog/2010/12/10/the-android-build-system/
 * Android Source Reference - http://source.android.com
